@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素說《金剛經》- 無有淺談</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts (Noto Serif TC) 增加禪意與經典感 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                    },
+                    colors: {
+                        zen: {
+                            50: '#f9f8f6',
+                            100: '#f2eee8',
+                            200: '#e5ddd3',
+                            300: '#d5c7b7',
+                            400: '#c2ab95',
+                            500: '#b29377',
+                            600: '#a37e61',
+                            700: '#886751',
+                            800: '#705545',
+                            900: '#5c463a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #f9f8f6;
+            color: #5c463a;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(229, 221, 211, 0.5);
+        }
+        /* 自訂捲軸 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f9f8f6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d5c7b7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b29377;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- 頁首導覽列 -->
+    <header class="bg-zen-50 shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="book-open" class="text-zen-700 w-6 h-6"></i>
+                <h1 class="text-xl font-bold text-zen-900 tracking-wider">素說《金剛經》</h1>
+            </div>
+            <div class="text-sm text-zen-600 font-medium">
+                by 無有淺談
+            </div>
+        </div>
+    </header>
+
+    <!-- 介紹區塊 (Hero Section) -->
+    <section class="py-12 md:py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-zen-800 leading-tight">領悟般若智慧<br>改變命運與人生</h2>
+            <div class="relative inline-block">
+                <i data-lucide="quote" class="absolute -top-4 -left-6 text-zen-300 w-8 h-8 opacity-50"></i>
+                <p class="text-lg md:text-xl text-zen-700 leading-relaxed text-justify md:text-center">
+                    每個人都應該讀一讀《金剛經》，學到其中的智慧可以改變命運以及人生，《金剛經》雖然是一部佛教經典。但是其中卻飽含著釋迦牟尼佛的超凡般若智慧，他教會我們如何為人，如何處事，如何應對人生無常，如何面對人生的跌宕起伏。《金剛經》的智慧超越了一切宗教性，同時也包含了一切宗教性。因此，在研究金剛經時，我們不能把它僅僅局限在宗教的範圍內。
+                </p>
+            </div>
+            <div class="mt-8 flex justify-center gap-4 text-zen-600 text-sm">
+                <span class="flex items-center gap-1"><i data-lucide="list-video" class="w-4 h-4"></i> 35 部影片</span>
+                <span class="flex items-center gap-1"><i data-lucide="eye" class="w-4 h-4"></i> 703,557 次觀看</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要內容區：搜尋與資源庫 -->
+    <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-20">
+        
+        <!-- 搜尋框 -->
+        <div class="mb-10 max-w-2xl mx-auto">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i data-lucide="search" class="w-5 h-5 text-zen-400"></i>
+                </div>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="block w-full pl-12 pr-4 py-4 bg-white border border-zen-200 rounded-full shadow-sm focus:ring-2 focus:ring-zen-500 focus:border-zen-500 text-zen-800 placeholder-zen-400 transition-all text-lg" 
+                    placeholder="搜尋章節、關鍵字 (例如：布施、虛妄、第10章)..."
+                >
+            </div>
+            <p id="searchResultText" class="text-center text-sm text-zen-600 mt-3 hidden">
+                找到 <span id="resultCount" class="font-bold"></span> 部相關影片
+            </p>
+        </div>
+
+        <!-- 影片列表網格 -->
+        <div id="videoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 卡片由 JavaScript 動態生成 -->
+        </div>
+
+        <!-- 無搜尋結果提示 -->
+        <div id="noResults" class="hidden flex flex-col items-center justify-center py-20 text-zen-500">
+            <i data-lucide="inbox" class="w-16 h-16 mb-4 opacity-50"></i>
+            <p class="text-lg">找不到符合的影片，請嘗試其他關鍵字。</p>
+        </div>
+
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="bg-zen-800 text-zen-200 py-8 text-center">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col items-center">
+            <i data-lucide="leaf" class="w-6 h-6 mb-4 opacity-80"></i>
+            <p class="text-sm opacity-80">資料來源：無有淺談 YouTube 頻道</p>
+            <p class="text-xs mt-2 opacity-60">此網頁為筆記整理用途，非官方網站。</p>
+        </div>
+    </footer>
+
+    <!-- 回到頂部按鈕 -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-zen-600 text-white p-3 rounded-full shadow-lg opacity-0 transition-opacity duration-300 hover:bg-zen-700 focus:outline-none hidden cursor-pointer">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <script>
+        // 初始化 Lucide Icons
+        lucide.createIcons();
+
+        // 影片資料庫 (由上傳的文本整理而來)
+        const videos = [
+            { id: 1, duration: "28:35", title: "素樸誦讀《金剛經》" },
+            { id: 2, duration: "6:20", title: "《金剛經》是人人都應該學習的超凡般若智慧，領悟《金剛經》真的可以改變人生命運！「素說金剛經 I 序言」" },
+            { id: 3, duration: "10:25", title: "人生就是一場修行，生活在紅塵之中就是最好的道場！佛陀言傳身教入世間法的般若大智慧！「素說金剛經 I 第1章」" },
+            { id: 4, duration: "19:04", title: "佛魔 善惡 都只在一念之間，佛說保護好念頭對修行非常重要，念頭來時煩惱也就跟著來了！「素說金剛經 I 第2章」" },
+            { id: 5, duration: "18:25", title: "想要向佛菩薩學習，一定要先破除這四種相，佛說凡所有相，皆是虛妄！「素說金剛經 I 第3章」" },
+            { id: 6, duration: "16:52", title: "布施的心態如果不對，就像和佛菩薩做交易一樣，毫無功德可言！「素說金剛經 I 第4章」" },
+            { id: 7, duration: "11:12", title: "想要開悟的人，只需悟透佛說的這八個字！凡所有相，皆是虛妄！「素說金剛經 I 第5章」" },
+            { id: 8, duration: "15:27", title: "修行人學習佛法要放下所有执着和慾望，那想要學習佛法算不算一種執著和慾望呢？「素說金剛經 I 第6章」" },
+            { id: 9, duration: "7:07", title: "竟然有人說佛法不可取？如來說無為法境界最高，那其他佛經又算什麽呢？「素說金剛經 I 第7章」" },
+            { id: 10, duration: "8:02", title: "究竟怎樣才算是悟道？佛說自稱開悟的人，根本就沒有開悟！自稱佛菩薩的人都是騙子！「素說金剛經 I 第8章」" },
+            { id: 11, duration: "21:02", title: "修行人經常會追求各種境界，佛陀講述四果無諍三昧境界，原來沒有境界才是最高的境界！「素說經典 I 金剛經 I 第9章」" },
+            { id: 12, duration: "11:35", title: "佛法就像一面鏡子，心裡有什麼就會照見什麼，每個人心裡都有不同的佛法，佛卻說
