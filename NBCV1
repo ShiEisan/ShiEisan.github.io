@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>無有淺談 - 修行與開悟資源庫</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Google Fonts: Noto Serif TC (思源宋體) 以增添中式古典禪意 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 引入 Phosphor Icons 替換一般圖示 -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Serif TC"', 'serif'],
+                    },
+                    colors: {
+                        zen: {
+                            50: '#f9f8f6',
+                            100: '#f2efe9',
+                            200: '#e1dacb',
+                            300: '#cec0ab',
+                            400: '#b8a084',
+                            500: '#a68563',
+                            600: '#9b7352',
+                            700: '#825d43',
+                            800: '#6b4d3a',
+                            900: '#573f31',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 隱藏捲軸但保持可捲動 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f9f8f6; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cec0ab; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a68563; 
+        }
+        .faq-answer {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-answer.open {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 1rem;
+        }
+        .hero-bg {
+            background: linear-gradient(rgba(249, 248, 246, 0.8), rgba(249, 248, 246, 0.9)), url('https://images.unsplash.com/photo-1528319725582-ddc096101511?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-zen-50 text-zen-900 font-sans antialiased selection:bg-zen-300 selection:text-white">
+
+    <!-- 導覽列 -->
+    <nav class="fixed w-full z-50 bg-zen-50/90 backdrop-blur-md border-b border-zen-200 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="ph ph-yin-yang text-3xl text-zen-700"></i>
+                    <span class="font-bold text-2xl tracking-widest text-zen-800">無有淺談</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#hero" class="text-zen-700 hover:text-zen-900 transition-colors">首頁</a>
+                    <a href="#library" class="text-zen-700 hover:text-zen-900 transition-colors">資源庫</a>
+                    <a href="#faq" class="text-zen-700 hover:text-zen-900 transition-colors">修行問答</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="text-zen-700 hover:text-zen-900 focus:outline-none">
+                        <i class="ph ph-list text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 頂部英雄區 & 搜尋 -->
+    <header id="hero" class="hero-bg min-h-screen flex items-center justify-center pt-20 px-4">
+        <div class="max-w-4xl w-full text-center space-y-8">
+            <p class="text-zen-600 tracking-[0.3em] uppercase text-sm md:text-base font-medium">素說經典 · 回歸本源</p>
+            <h1 class="text-4xl md:text-6xl font-bold text-zen-800 leading-tight">
+                激發靈感 激活直覺<br>
+                <span class="text-zen-600 block mt-4 text-3xl md:text-5xl">聯通高我 獲得無邊智慧</span>
+            </h1>
+            <p class="text-lg md:text-xl text-zen-700 max-w-2xl mx-auto leading-relaxed">
+                人得天地之氣而生。學習《道德經》、《黃帝內經》與佛法智慧，修心養性，拒絕內耗，找到生命的終極自由。
+            </p>
+            
+            <!-- 搜尋框 -->
+            <div class="relative max-w-2xl mx-auto mt-12 group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="ph ph-magnifying-glass text-2xl text-zen-400 group-focus-within:text-zen-700 transition-colors"></i>
+                </div>
+                <input type="text" id="searchInput" 
+                    class="block w-full pl-12 pr-4 py-4 md:py-5 border-2 border-zen-200 rounded-2xl leading-5 bg-white placeholder-zen-400 focus:outline-none focus:border-zen-500 focus:ring-1 focus:ring-zen-500 transition-all text-lg shadow-lg" 
+                    placeholder="搜尋修練法門、經典解讀（例如：吐納、打坐、金剛經...）">
+            </div>
+        </div>
+    </header>
+
+    <!-- 資源庫區塊 -->
+    <section id="library" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-zen-800 mb-4">修行資源庫</h2>
+                <div class="w-16 h-1 bg-zen-400 mx-auto rounded"></div>
+                <p class="mt-4 text-zen-600">從丹道、中醫到經文解讀，探索適合您的修行之法。</p>
+            </div>
+
+            <!-- 標籤過濾 -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12" id="filterTags">
+                <button class="filter-btn active px-6 py-2 rounded-full border border-zen-300 bg-zen-800 text-white transition-all" data-filter="all">全部</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-zen-300 text-zen-700 hover:bg-zen-100 transition-all" data-filter="道家修行">道家修行</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-zen-300 text-zen-700 hover:bg-zen-100 transition-all" data-filter="佛學禪修">佛學禪修</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-zen-300 text-zen-700 hover:bg-zen-100 transition-all" data-filter="中醫養生">中醫養生</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-zen-300 text-zen-700 hover:bg-zen-100 transition-all" data-filter="經典解讀">經典解讀</button>
+            </div>
+
+            <!-- 卡片網格 -->
+            <div id="resourceGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 由 JS 動態生成 -->
+            </div>
+            
+            <!-- 無搜尋結果提示 -->
+            <div id="noResults" class="hidden text-center py-12 text-zen-500 text-lg">
+                <i class="ph ph-wind text-5xl mb-4 opacity-50"></i>
+                <p>空空如也。換個關鍵字試試吧。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ 區塊 -->
+    <section id="faq" class="py-24 bg-zen-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-zen-800 mb-4">求道解惑 (FAQ)</h2>
+                <div class="w-16 h-1 bg-zen-400 mx-auto rounded"></div>
+                <p class="mt-4 text-zen-600">針對同修們最常遇到的修行迷思與問題進行解答。</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm cursor-pointer faq-item border border-transparent hover:border-zen-200 transition-colors">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-zen-800">每天怎麼做才算是修行？有定量嗎？</h3>
+                        <i class="ph ph-caret-down text-2xl text-zen-500 transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer text-zen-600 leading-relaxed">
+                        修行沒有定量。你不是寺廟裡的和尚，沒有硬性的早課晚課。修行的本質是「修己」。如果每天打坐、念經、吃素卻沒有讓自己變得更好，那通通只是表象。明天比今天更好，心態更平和，不隨意發脾氣，這就是修行。第一步不是找功法，而是擺正態度，調整心念。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm cursor-pointer faq-item border border-transparent hover:border-zen-200 transition-colors">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-zen-800">戒色真的能「還精補腦」嗎？如何百日築基？</h3>
+                        <i class="ph ph-caret-down text-2xl text-zen-500 transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer text-zen-600 leading-relaxed">
+                        「還精補腦」指的不是把排泄物的精子變回腦子。道家認為，只要思想上產生了色慾、執念或強烈情緒，精氣就已經洩露了（這叫濁精）。百日築基不是單純的忍耐禁慾，而是要做到「不起心動念」，減少無謂的消耗（節流），並透過如素門吐納法來吸收先天真氣（開源），才能真正煉精化氣。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm cursor-pointer faq-item border border-transparent hover:border-zen-200 transition-colors">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-zen-800">如何正確補陽氣？</h3>
+                        <i class="ph ph-caret-down text-2xl text-zen-500 transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer text-zen-600 leading-relaxed">
+                        春夏養陽的重點在於「胃」。首先要忌口一切生冷寒涼的食物。可以多吃小米粥、喝薑茶來滋養脾胃。另外要多曬早晨8-9點的太陽曬背部（督脈為陽脈之海）。切忌熬夜，尤其是晚上11點子時後不睡會嚴重耗損陽氣。半夜洗頭洗澡更是大忌，會導致毛孔張開，陰寒之氣趁虛而入。
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm cursor-pointer faq-item border border-transparent hover:border-zen-200 transition-colors">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-zen-800">如何做到「恬淡虛無」，拒絕精神內耗？</h3>
+                        <i class="ph ph-caret-down text-2xl text-zen-500 transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer text-zen-600 leading-relaxed">
+                        「恬」是少言寡語，少些無謂的爭辯；「淡」是淡泊欲望，有自己的世界，不和別人的世界做過度連接；「虛」是鬧中取靜的狀態，坐懷天下而不亂於心；「無」則是神不外放、精神內守。不要瘋狂思慮，因為「勞心傷神」消耗的內在能量遠大於體力勞動。
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm cursor-pointer faq-item border border-transparent hover:border-zen-200 transition-colors">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-zen-800">道家的「無為」是什麼都不做嗎？</h3>
+                        <i class="ph ph-caret-down text-2xl text-zen-500 transform transition-transform duration-300"></i>
+                    </div>
+                    <div class="faq-answer text-zen-600 leading-relaxed">
+                        無為絕對不是躺平。老子說的無為，是一種「非空非有」的狀態。你說他沒有作為，他卻順應了道法自然產生了結果；你說他做了，他卻毫無功利心和主觀強求的目的性。「聖人處無為之事，行不言之教」，是順應萬物的自性發展，不橫加干涉與破壞。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zen-900 text-zen-200 py-12 border-t border-zen-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <div class="flex justify-center items-center gap-2">
+                <i class="ph ph-yin-yang text-3xl text-zen-400"></i>
+                <span class="font-bold text-2xl tracking-widest text-white">無有淺談</span>
+            </div>
+            <p class="text-sm opacity-80">傳承華夏文明智慧，探究道法自然與佛法實相。<br>本資源庫內容整理自《無有淺談 I 素樸》。</p>
+            <div class="pt-6 border-t border-zen-800 text-xs opacity-60">
+                &copy; 2026 無有淺談資源庫. All rights reserved. 
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 邏輯 -->
+    <script>
+        // 知識庫數據 (根據上傳的文檔提取)
+        const resourceData = [
+            { category: '道家修行', title: '素門吐納法與胎息辟谷', desc: '不吃不睡的先天真氣大補法。調整呼吸激活皮膚毛孔吸收先天真氣，開啟胎息與自然辟谷的境界。', icon: 'ph-wind' },
+            { category: '道家修行', title: '道家修行關鍵：逆轉周天', desc: '煉精化氣，逆轉周天返還先天之氣。探討道家「丹道」與「上古煉氣法」的差別與實修法門。', icon: 'ph-arrows-clockwise' },
+            { category: '中醫養生', title: '素門玄一伸筋法', desc: '筋長一寸，壽延十年。透過正筋骨、舒筋活絡的導引動作，配合吐納，讓氣血自流，恢復身體巔峰。', icon: 'ph-person-arms-spread' },
+            { category: '中醫養生', title: '八虛長生功', desc: '人體八虛是毒素堆積最多的位置。示範如何每天拍打兩肘、兩腋、兩髕、兩腘排除體內毒素。', icon: 'ph-hand-tap' },
+            { category: '中醫養生', title: '睡眠與四時調神', desc: '睡覺方法錯誤不如不睡！春夏養陽，秋冬養陰。解析黃帝內經中夜臥早起與自然節氣的對應關係。', icon: 'ph-moon-stars' },
+            { category: '中醫養生', title: '陰陽失調與疾病根源', desc: '食物氣味背後隱藏的秘密。酸苦湧泄為陰，辛甘發散為陽。半夜洗頭洗澡等於慢性自殺的原因。', icon: 'ph-thermometer-hot' },
+            { category: '佛學禪修', title: '善護念：佛魔善惡一念間', desc: '念頭來時煩惱跟著來。保護好自己的心念對修行至關重要，放下執著，應無所住而生其心。', icon: 'ph-lotus' },
+            { category: '佛學禪修', title: '金剛經最終奧義', desc: '一切有為法，如夢幻泡影。佛說現實世界本就是虛幻的，教你如何不著相，如如不動。', icon: 'ph-book-open-text' },
+            { category: '經典解讀', title: '天道無親，常與善人', desc: '道德經天篇解密：努力不如躺平？其實是教你順應天時地利人和，懂得「道法自然」的雙刃劍。', icon: 'ph-scroll' },
+            { category: '經典解讀', title: '莊子逍遙遊：鯤鵬之喻', desc: '小斑鳩嘲笑大鵬鳥。解析《莊子》中暗藏的修行境界，格局決定人生成就與修道的高度。', icon: 'ph-bird' },
+            { category: '經典解讀', title: '玄牝之門與萬物化生', desc: '老子《道德經》暗藏世間萬物化生輪迴的法則。谷神不死，是謂玄牝。', icon: 'ph-infinity' },
+            { category: '道家修行', title: '陽神出體與金剛不壞', desc: '純陽之體的真實含義。如何練就陽神，避免走火入魔，了解修真與元神靈光的秘密。', icon: 'ph-person-simple-walk' }
+        ];
+
+        const grid = document.getElementById('resourceGrid');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // 渲染資源卡片
+        function renderResources() {
+            grid.innerHTML = '';
+            
+            const filteredData = resourceData.filter(item => {
+                const matchFilter = currentFilter === 'all' || item.category === currentFilter;
+                const matchSearch = item.title.includes(searchQuery) || item.desc.includes(searchQuery) || item.category.includes(searchQuery);
+                return matchFilter && matchSearch;
+            });
+
+            if (filteredData.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                filteredData.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-zen-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 group cursor-pointer';
+                    card.innerHTML = `
+                        <div class="w-12 h-12 bg-zen-50 text-zen-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-zen-600 group-hover:text-white transition-colors">
+                            <i class="ph ${item.icon} text-2xl"></i>
+                        </div>
+                        <span class="text-xs font-bold tracking-widest text-zen-500 uppercase mb-2 block">${item.category}</span>
+                        <h3 class="text-xl font-bold text-zen-800 mb-3 leading-snug group-hover:text-zen-600 transition-colors">${item.title}</h3>
+                        <p class="text-zen-600 text-sm leading-relaxed">${item.desc}</p>
+                        <div class="mt-6 flex items-center text-zen-500 text-sm font-medium group-hover:text-zen-700">
+                            閱讀詳情 <i class="ph ph-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        // 搜尋事件
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.trim();
+            renderResources();
+            // 自動滾動到資源庫
+            if(searchQuery !== '' && window.scrollY < document.getElementById('library').offsetTop - 100) {
+                document.getElementById('library').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // 標籤過濾事件
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 更新按鈕樣式
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-zen-800', 'text-white');
+                    b.classList.add('text-zen-700', 'hover:bg-zen-100');
+                });
+                btn.classList.remove('text-zen-700', 'hover:bg-zen-100');
+                btn.classList.add('bg-zen-800', 'text-white');
+
+                currentFilter = btn.getAttribute('data-filter');
+                renderResources();
+            });
+        });
+
+        // FAQ 手風琴效果
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('i');
+                const isOpen = answer.classList.contains('open');
+
+                // 關閉其他
+                faqItems.forEach(otherItem => {
+                    otherItem.querySelector('.faq-answer').classList.remove('open');
+                    otherItem.querySelector('i').classList.remove('rotate-180');
+                    otherItem.classList.remove('border-zen-300', 'shadow-md');
+                });
+
+                // 切換當前
+                if (!isOpen) {
+                    answer.classList.add('open');
+                    icon.classList.add('rotate-180');
+                    item.classList.add('border-zen-300', 'shadow-md');
+                }
+            });
+        });
+
+        // 導覽列滾動效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+
+        // 初始渲染
+        renderResources();
+    </script>
+</body>
+</html>
